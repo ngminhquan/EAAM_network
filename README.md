@@ -7,5 +7,3 @@
 3: login phase
 4: authen & ssk establish
 5: renewal of user's password'''
-
-#Registration with CA
