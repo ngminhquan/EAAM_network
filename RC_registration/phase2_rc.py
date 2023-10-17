@@ -77,7 +77,7 @@ if k1 != k1_check:
 #RC generate secret parameter y
 y = input('Enter secret parameter y: ').encode('utf-8')
 #n: the number of registrations performed by IDi
-n = b''
+n = b''              #
 #Ai = H(idi|GK|y|n)
 #Bi = Ai XOR GK
 #Ci = H(Ai) XOR H(Fi|ti|idi)
