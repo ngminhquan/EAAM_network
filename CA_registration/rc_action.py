@@ -41,14 +41,10 @@ x = random.randint(10**3, 10**4)
 p = generate_random_prime(32)
 ε = 300
 
-with open('cbs_para.txt','w',encoding='utf-8') as para:
-    para.write(str(x))
-    para.write('\n' + str(p))
-    para.write('\n' + str(ε))
-
 
 #Enter secret key r and public key tr of RC
 r = input("Enter secret key of RC:")
+
 tr = cbs(int(r), x, p)
 
 #Create hash on RC and tr => cert
@@ -57,10 +53,19 @@ sha.update(b'RC' + bytes(tr))
 cert_r = sha.digest()
 #print(cert_r)
 
+#Save parameters for chebyshev and public key, cert of RC
+with open('cbs_para.txt','w',encoding='utf-8') as para:
+    para.write(str(x))
+    para.write('\n' + str(p))
+    para.write('\n' + str(ε))
+    para.write('\n' + str(tr))
+
 
 #RC share all validate server group key GK
 gk ='group key'
 with open('server_record.txt', 'w', encoding='utf-8') as record:
       record.write(gk)
-
+#Save secret key of RC and group key GK (secure)
+with open('rc_key.txt') as rc:
+    rc.writelines(r, gk)
 

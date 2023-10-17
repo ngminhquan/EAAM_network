@@ -12,4 +12,3 @@ def cbs(n, x, p):
 n = 12
 x = 23
 p = 3734217031
-print(cbs(n, x, p))

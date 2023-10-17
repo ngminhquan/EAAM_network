@@ -24,7 +24,6 @@ print(hash_s)
 
 cert_s = infor + hash_s
 
-
 # publish cert, IDs, ts in a publicly available repository
 with open('server_record.txt', 'ab') as record:
       record.write('\n'.encode('utf-8'))
