@@ -7,8 +7,12 @@ import numpy as np
 import sys
 
 def cbs(n, x, p):
-    return n+x+p
+    if n == 0:
+        return 1
+    elif n == 1:
+        return x % p
+    elif n % 2 == 0:
 
-n = 12
-x = 23
-p = 3734217031
+        return (2 * cbs(n // 2, x, p) ** 2 - 1) % p
+    else:
+        return (2 * cbs((n - 1) // 2, x, p) * cbs((n + 1) // 2, x, p) - x) %p
