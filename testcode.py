@@ -1,4 +1,6 @@
-with open('server_record.txt') as record:
-    a, b, c, d = record.readlines()
+from chebyshev import cbs
 
-print(a, b, c, d)
+n = 3545050248708763954
+x = 8314
+p = 2415314353
+

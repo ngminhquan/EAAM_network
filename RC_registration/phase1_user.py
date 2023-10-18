@@ -1,11 +1,11 @@
 #Using the information (IDi, ti, Ti, certi), the user is now able to
 #register with the RC without the need of a secure channel 
 
-from Crypto.Hash import SHA256, SHA1
+from Crypto.Hash import SHA256
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 import random
-from chebyshev import cbs
+from chebyshev import cbs, Tnm2
 import time
 
 #import parameters for chebyshev map

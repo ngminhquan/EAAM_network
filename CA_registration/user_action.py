@@ -1,6 +1,6 @@
 import random
 from Crypto.Hash import SHA256
-from chebyshev import cbs
+from chebyshev import cbs, Tnm2
 import time
 
 #xor function
@@ -28,25 +28,27 @@ infor = idi + xor(pw, rb) + bio
 # Compute secret key i by using SHA256
 sha256 = SHA256.new()
 sha256.update(infor)
-i = sha256.digest()         #chua xu ly input
+i = sha256.digest()     
 
 #Generate public key ti
 #import parameters for chebyshev map
 with open('cbs_para.txt') as para:
-        x, p, ε = para.readlines()
+        lines = para.readlines()
+        x, p, ε = int(lines[0]), int(lines[1]), int(lines[2])
 
-ti = cbs(int(infor), x, p)
+infor_int = int.from_bytes(infor, byteorder='big')
+#print(infor_int, type(infor_int))
+ti:int = Tnm2(infor_int, x, p)
 #Generate user's cert
 #Cert include user's id and public key and timestamp Ti
-infor = idi + str(ti).encode('utf-8')
+ti_byte = str(ti).encode()
+usr = idi + ti_byte
 Ti = time.time()
-
 #print(infor)
-sha256.update(infor + str(Ti).encode('utf-8'))
+sha256.update(usr + str(Ti).encode())
 hash_i = sha256.digest()
 #print(hash_i)
-
-cert_i = idi + ti + Ti + hash_i
+cert_i = idi + ti_byte + str(Ti).encode() + hash_i
 
 # Save user's infor and cert
 #user device
@@ -54,5 +56,7 @@ cert_i = idi + ti + Ti + hash_i
 ei = xor(pw, rb) + xor(bio, rb) + idi
 sha256.update(ei)
 Ei = sha256.digest()
+lines = [idi,b'\n', rb,b'\n', i,b'\n', ti_byte,b'\n',
+          str(Ti).encode(),b'\n', cert_i,b'\n', Ei]
 with open('user.txt', 'wb') as record:
-      record.writelines(idi, rb, i, ti, Ti, cert_i, Ei)
+      record.writelines(lines)
